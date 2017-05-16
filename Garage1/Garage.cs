@@ -12,7 +12,12 @@ namespace Garage1 {
 		private Vehicle[] arrVehicle;
 
 		private int _IndexOf(string RegNr) {
-			return 0;
+			for(int i = 0; i < count; i++) {
+				if (arrVehicle[i].RegNr == RegNr) {
+					return i;
+				}
+			}
+			return -1;
 		}
 
 		public Garage(int cap = 3) {
@@ -24,19 +29,20 @@ namespace Garage1 {
 			if (count < capacity) {
 				arrVehicle[count++] = vehicle;
 			}
-			var x = new List<string>();
 		}
 
 		public bool Remove(string RegNr) {
-			var index = _IndexOf(RegNr);
-			if (index < 0) {
-				
+			int index = _IndexOf(RegNr);
+			if (index < 0) return false;
+			while (index < count && index < capacity) {
+				arrVehicle[index] = arrVehicle[++index];
 			}
+			count--;
 			return true;
 		}
 
 		public IEnumerator<T> GetEnumerator() {
-			for(var i = 0; i < count; i++) {
+			for(int i = 0; i < count; i++) {
 				yield return (T)arrVehicle[i];
 			}
 		}
