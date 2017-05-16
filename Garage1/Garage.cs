@@ -32,6 +32,7 @@ namespace Garage1 {
 			if (index < 0) {
 				
 			}
+			return true;
 		}
 
 		public IEnumerator<T> GetEnumerator() {
