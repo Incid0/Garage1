@@ -9,7 +9,7 @@ namespace Garage1 {
 	class Garage<T> : IEnumerable<T> where T : Vehicle {
 		private int capacity;
 		private int count = 0;
-		private Vehicle[] arrVehicle;
+		private T[] arrVehicle;
 
 		private int _IndexOf(string RegNr) {
 			for(int i = 0; i < count; i++) {
@@ -22,13 +22,15 @@ namespace Garage1 {
 
 		public Garage(int cap = 3) {
 			capacity = cap;
-			arrVehicle = new Vehicle[cap];
+			arrVehicle = new T[cap];
 		}
 
-		public void Add(Vehicle vehicle) {
-			if (count < capacity) {
+		public bool Add(T vehicle) {
+			bool result = (count < capacity);
+			if (result) {
 				arrVehicle[count++] = vehicle;
 			}
+			return result;
 		}
 
 		public bool Remove(int index)
@@ -54,6 +56,20 @@ namespace Garage1 {
 
 		IEnumerator IEnumerable.GetEnumerator() {
 			return GetEnumerator();
+		}
+
+		public IEnumerable<T> Search(int wheel = Int32.MaxValue)
+		{
+			return this.Where(x => x.Wheels < wheel);
+		}
+
+		public T Find(string RegNr)
+		{
+			T result = null;
+			int index = _IndexOf(RegNr);
+			if (index >= 0)
+				result = arrVehicle[index];
+			return result;
 		}
 	}
 }
