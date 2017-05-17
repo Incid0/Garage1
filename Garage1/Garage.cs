@@ -31,14 +31,19 @@ namespace Garage1 {
 			}
 		}
 
-		public bool Remove(string RegNr) {
-			int index = _IndexOf(RegNr);
+		public bool Remove(int index)
+		{
 			if (index < 0) return false;
-			while (index < count && index < capacity) {
+			while (index < count && index < capacity)
+			{
 				arrVehicle[index] = arrVehicle[++index];
 			}
 			count--;
 			return true;
+		}
+
+		public bool Remove(string RegNr) {
+			return Remove(_IndexOf(RegNr));
 		}
 
 		public IEnumerator<T> GetEnumerator() {

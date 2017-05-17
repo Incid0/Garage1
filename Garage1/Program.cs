@@ -14,6 +14,7 @@ namespace Garage1 {
 
 			foreach(var vehicle in GarageBas) {
 				Console.WriteLine(vehicle.RegNr);
+				break;
 			}
 		}
 	}
