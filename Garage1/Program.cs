@@ -23,6 +23,15 @@ namespace Garage1 {
 			{
 				Console.WriteLine(vehicle.Stats());
 			}
+
+			var query = from v in MyGarage
+						orderby v.GetType().Name
+						select v.GetType().Name;
+
+			foreach (var type in MyGarage.Types()) {
+				Console.WriteLine("{0} : {1}", type.Name, type.Count);
+			}
+			Console.ReadKey();
 		}
 	}
 }

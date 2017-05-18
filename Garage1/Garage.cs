@@ -6,12 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Garage1 {
+	 class TypeList {
+		public string Name { get; set; }
+		public int Count { get; set; }
+	}
+	
 	class Garage<T> : IEnumerable<T> where T : Vehicle {
 		private int capacity;
 		private int count = 0;
 		private T[] arrVehicle;
 
-		private int _IndexOf(string RegNr) {
+		private int _IndexOf(string RegNr)
+		{
 			for(int i = 0; i < count; i++) {
 				if (arrVehicle[i].RegNr == RegNr) {
 					return i;
@@ -20,12 +26,14 @@ namespace Garage1 {
 			return -1;
 		}
 
-		public Garage(int cap = 3) {
+		public Garage(int cap = 3)
+		{
 			capacity = cap;
 			arrVehicle = new T[cap];
 		}
 
-		public bool Add(T vehicle) {
+		public bool Add(T vehicle)
+		{
 			bool result = (count < capacity);
 			if (result) {
 				arrVehicle[count++] = vehicle;
@@ -44,23 +52,36 @@ namespace Garage1 {
 			return true;
 		}
 
-		public bool Remove(string RegNr) {
+		public bool Remove(string RegNr)
+		{
 			return Remove(_IndexOf(RegNr));
 		}
 
-		public IEnumerator<T> GetEnumerator() {
+		public IEnumerator<T> GetEnumerator()
+		{
 			for(int i = 0; i < count; i++) {
 				yield return (T)arrVehicle[i];
 			}
 		}
 
-		IEnumerator IEnumerable.GetEnumerator() {
+		IEnumerator IEnumerable.GetEnumerator()
+		{
 			return GetEnumerator();
 		}
 
 		public IEnumerable<T> Search(int wheel = Int32.MaxValue)
 		{
 			return this.Where(x => x.Wheels < wheel);
+		}
+
+		public IEnumerable<TypeList> Types()
+		{
+			return this.GroupBy(vehicle => vehicle.GetType().Name)
+					   .Select(types => new TypeList {
+							Name = types.Key,
+							Count = types.Count()
+						})
+						.OrderBy(t => t.Name);
 		}
 
 		public T Find(string RegNr)
