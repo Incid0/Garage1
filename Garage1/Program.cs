@@ -13,7 +13,7 @@ namespace Garage1 {
 			MyGarage.Add(new Motorcycle() { RegNr = "ZOO123" });
 			MyGarage.Add(new Vehicle() { RegNr = "TXT000", Wheels = 10 });
 
-			foreach(var vehicle in MyGarage.Search(5)) {
+			foreach (var vehicle in MyGarage.Search(wheel: 5)) {
 				Console.WriteLine(vehicle.Stats());
 			}
 
@@ -31,7 +31,18 @@ namespace Garage1 {
 			foreach (var type in MyGarage.Types()) {
 				Console.WriteLine("{0} : {1}", type.Name, type.Count);
 			}
-			Console.ReadKey();
+
+			Menu MyMenu;// = new Menu();
+			(MyMenu = new Menu("Welcome to the Garage"))
+				.Add("Test")
+				.Add("Test2", (x) => {
+					Console.WriteLine("You picked {0}!", x);
+					Console.ReadLine();
+				})
+				.Add((new Menu("Submenu 1"))
+					.Add("Submenu choice 1")
+					.Add("Submenu choice 2"))							
+				.Run();
 		}
 	}
 }
