@@ -9,6 +9,7 @@ namespace Garage1
 	class MenuItem
 	{
 		private string _name;
+
 		internal Action<int> MenuAction { get; set; }
 		internal Menu SubMenu { get; set; }
 		internal string Name { get => (SubMenu != null) ? SubMenu.Title : _name; set => _name = value; }
@@ -27,6 +28,7 @@ namespace Garage1
 		private List<MenuItem> _items;
 		internal Menu Parent { get; set; }
 		public string Title { get; set; }
+		internal Func<string> StatusCallback;
 
 		public Menu()
 		{
@@ -36,6 +38,11 @@ namespace Garage1
 		public Menu(string title) : this()
 		{
 			Title = title;
+		}
+
+		public Menu(string title, Func<string> callback) : this(title)
+		{
+			StatusCallback = callback;
 		}
 
 		static char GetChoice(int max)
@@ -63,6 +70,7 @@ namespace Garage1
 		{
 			_items.Add(new MenuItem() { SubMenu = submenu });
 			submenu.Parent = this;
+			submenu.StatusCallback = this.StatusCallback;
 			return this;
 		}
 
@@ -72,13 +80,15 @@ namespace Garage1
 			do
 			{
 				Console.Clear();
+				Console.WriteLine(StatusCallback?.Invoke());
+				Console.WriteLine();
 				Console.WriteLine(Title);
-				Console.WriteLine(new String('=', 20));
+				Console.WriteLine(new String('=', 40));
 				for (int i = 0; i < _items.Count(); i++)
 				{
 					Console.WriteLine("{0} - {1}", i + 1, _items[i].Name);
 				}
-				Console.WriteLine(Parent != null?"0 - To go back": "0 - To exit program");
+				Console.WriteLine(Parent != null?"\n0 - To go back\n": "\n0 - To exit program\n");
 				choice = (int)GetChoice(_items.Count()) - 48;
 				if (choice > 0)
 				{

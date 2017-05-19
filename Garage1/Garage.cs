@@ -16,6 +16,8 @@ namespace Garage1 {
 		private int count = 0;
 		private T[] arrVehicle;
 
+		public int Capacity { get => capacity; }
+
 		private int _IndexOf(string RegNr)
 		{
 			for(int i = 0; i < count; i++) {
@@ -26,7 +28,7 @@ namespace Garage1 {
 			return -1;
 		}
 
-		public Garage(int cap = 3)
+		public Garage(int cap = 0)
 		{
 			capacity = cap;
 			arrVehicle = new T[cap];
