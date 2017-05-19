@@ -81,13 +81,13 @@ namespace Garage1
 			{
 				Console.Clear();
 				Console.WriteLine(StatusCallback?.Invoke());
-				Console.WriteLine();
 				Console.WriteLine(Title);
 				Console.WriteLine(new String('=', 40));
 				for (int i = 0; i < _items.Count(); i++)
 				{
 					Console.WriteLine("{0} - {1}", i + 1, _items[i].Name);
 				}
+				// If Parent isn't set were at the main menu
 				Console.WriteLine(Parent != null?"\n0 - To go back\n": "\n0 - To exit program\n");
 				choice = (int)GetChoice(_items.Count()) - 48;
 				if (choice > 0)

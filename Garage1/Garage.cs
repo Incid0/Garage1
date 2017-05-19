@@ -5,13 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Garage1 {
-	 class TypeList {
+namespace Garage1
+{
+	class TypeList
+	{
 		public string Name { get; set; }
 		public int Count { get; set; }
 	}
-	
-	class Garage<T> : IEnumerable<T> where T : Vehicle {
+
+	class Garage<T> : IEnumerable<T> where T : Vehicle
+	{
 		private int capacity;
 		private int count = 0;
 		private T[] arrVehicle;
@@ -20,8 +23,11 @@ namespace Garage1 {
 
 		private int _IndexOf(string RegNr)
 		{
-			for(int i = 0; i < count; i++) {
-				if (arrVehicle[i].RegNr == RegNr) {
+			RegNr = RegNr.ToUpper();
+			for (int i = 0; i < count; i++)
+			{
+				if (arrVehicle[i].RegNr.ToUpper() == RegNr)
+				{
 					return i;
 				}
 			}
@@ -37,7 +43,8 @@ namespace Garage1 {
 		public bool Add(T vehicle)
 		{
 			bool result = (count < capacity);
-			if (result) {
+			if (result)
+			{
 				arrVehicle[count++] = vehicle;
 			}
 			return result;
@@ -61,7 +68,8 @@ namespace Garage1 {
 
 		public IEnumerator<T> GetEnumerator()
 		{
-			for(int i = 0; i < count; i++) {
+			for (int i = 0; i < count; i++)
+			{
 				yield return (T)arrVehicle[i];
 			}
 		}
@@ -71,18 +79,32 @@ namespace Garage1 {
 			return GetEnumerator();
 		}
 
-		public IEnumerable<T> Search(int wheel = Int32.MaxValue)
+		public IEnumerable<T> Search(string words)
 		{
-			return this.Where(x => x.Wheels < wheel);
+			IEnumerable<T> result = this;
+			int numeric = 0;
+			foreach (string word in words.Split())
+			{
+				if (int.TryParse(word, out numeric))
+				{
+					result = result.Where(x => x.MatchNumeric(numeric));
+				}
+				else
+				{
+					result = result.Where(x => x.Match(word));
+				}
+			}
+			return result;
 		}
 
 		public IEnumerable<TypeList> Types()
 		{
 			return this.GroupBy(vehicle => vehicle.GetType().Name)
-					   .Select(types => new TypeList {
-							Name = types.Key,
-							Count = types.Count()
-						})
+					   .Select(types => new TypeList
+					   {
+						   Name = types.Key,
+						   Count = types.Count()
+					   })
 						.OrderBy(t => t.Name);
 		}
 
