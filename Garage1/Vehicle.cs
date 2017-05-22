@@ -36,12 +36,8 @@ namespace Garage1
 			return RegNr.IndexOf(pattern, StringComparison.CurrentCultureIgnoreCase) >= 0 ||
 					Brand.IndexOf(pattern, StringComparison.CurrentCultureIgnoreCase) >= 0 ||
 					Model.IndexOf(pattern, StringComparison.CurrentCultureIgnoreCase) >= 0 ||
-					Color.IndexOf(pattern, StringComparison.CurrentCultureIgnoreCase) >= 0;
-		}
-
-		public virtual bool MatchNumeric(int value)
-		{
-			return (Wheels == value);
+					Color.IndexOf(pattern, StringComparison.CurrentCultureIgnoreCase) >= 0 ||
+					Wheels.ToString().IndexOf(pattern) >= 0;
 		}
 	}
 }

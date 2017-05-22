@@ -22,9 +22,9 @@ namespace Garage1
 			return String.Format("{0}Number of seats:  {1}\n", base.Stats(), Seats);
 		}
 
-		public override bool MatchNumeric(int value)
+		public override bool Match(string pattern)
 		{
-			return base.MatchNumeric(value) || (Seats == value);
+			return base.Match(pattern) || (Seats.ToString().IndexOf(pattern) >= 0);
 		}
 	}
 }

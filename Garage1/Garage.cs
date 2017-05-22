@@ -82,17 +82,9 @@ namespace Garage1
 		public IEnumerable<T> Search(string words)
 		{
 			IEnumerable<T> result = this;
-			int numeric = 0;
 			foreach (string word in words.Split())
 			{
-				if (int.TryParse(word, out numeric))
-				{
-					result = result.Where(x => x.MatchNumeric(numeric));
-				}
-				else
-				{
-					result = result.Where(x => x.Match(word));
-				}
+				result = result.Where(x => x.Match(word));
 			}
 			return result;
 		}

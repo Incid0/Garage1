@@ -22,9 +22,9 @@ namespace Garage1
 			return String.Format("{0}Wingspan:         {1}m\n", base.Stats(), Wingspan);
 		}
 
-		public override bool MatchNumeric(int value)
+		public override bool Match(string pattern)
 		{
-			return base.MatchNumeric(value) || (Wingspan == value);
+			return base.Match(pattern) || (Wingspan.ToString().IndexOf(pattern) >= 0);
 		}
 	}
 }

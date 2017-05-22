@@ -23,9 +23,9 @@ namespace Garage1
 			return String.Format("{0}Cylinder volume:  {1}cc\n", base.Stats(), CylVolume);
 		}
 
-		public override bool MatchNumeric(int value)
+		public override bool Match(string pattern)
 		{
-			return base.MatchNumeric(value) || (CylVolume == value);
+			return base.Match(pattern) || (CylVolume.ToString().IndexOf(pattern) >= 0);
 		}
 	}
 }

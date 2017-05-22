@@ -22,9 +22,9 @@ namespace Garage1
 			return String.Format("{0}Length:           {1}m\n", base.Stats(), Length);
 		}
 
-		public override bool MatchNumeric(int value)
+		public override bool Match(string pattern)
 		{
-			return base.MatchNumeric(value) || (Length == value);
+			return base.Match(pattern) || (Length.ToString().IndexOf(pattern) >= 0);
 		}
 	}
 }
